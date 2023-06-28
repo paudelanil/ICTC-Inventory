@@ -53,7 +53,7 @@ class Item(models.Model):
     in_maintenance = models.IntegerField(default=0,validators=[MinValueValidator(0)])
     out_of_order = models.IntegerField(default=0,validators=[MinValueValidator(0)])
     created = models.DateTimeField(auto_now_add=True, null=True)
-    last_modified = models.DateTimeField(auto_now=True, null=True)
+    last_modified = models.DateTimeField(auto_now=True, )
     extra_value = JSONField(blank=True, null=True, default=dict)
     remarks = models.CharField(max_length=400, default='',
                             help_text='Enter remarks')

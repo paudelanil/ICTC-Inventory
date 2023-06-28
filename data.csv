@@ -1,0 +1,13 @@
+category_name,floor_number,room_number,item_name,item_model,cost_per_item,date_of_acquire,working,in_maintenance,out_of_order,sub_item_name,sub_item_working,sub_item_in_maintenance,sub_item_out_of_order
+Electronics,1,100,Beam Projector,,100,06/28/23,1,0,0,,1,0,0
+Electronics,1,100,Projector Screen,,200,06/29/23,1,0,0,,0,1,0
+Furniture,1,100,Computer Table,,300,06/30/23,10,,,,,,
+Furniture,1,100,Chair for lab,,3034,07/01/23,32,,,,,,
+Furniture,1,100,Chair for lecture,,21312,07/02/23,7,,,,,,
+Furniture,1,100,White Board,,423,07/03/23,1,,,,,,
+Furniture,1,100,Office desk,,123,07/04/23,1,,,,,,
+Electronics,1,100,Printer HP Laserjet 400,,213123,07/05/23,1,,,,,,
+Furniture,1,100,UPS,,231,07/06/23,17,,,,,1,
+Furniture,1,100,Small Rack,,213,07/07/23,2,,,,,,
+Electronics,1,100,Jooyontech Computer,,2131,07/08/23,1,,,,,,
+Electronics,1,100,Switch for educational rack,,3432,07/09/23,1,,,,,,
