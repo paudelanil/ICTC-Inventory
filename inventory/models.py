@@ -3,7 +3,6 @@
 from collections import defaultdict
 from typing import DefaultDict
 from django.db import models
-import datetime
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
 from django.db.models.fields import CharField
@@ -48,7 +47,10 @@ class Item(models.Model):
     room = models.ForeignKey('Room', null=True, on_delete=models.SET_NULL,
                              help_text='Select room where it is kept')
     date_of_acquire = models.DateField(
-        default=datetime.date.today, help_text='Enter the date of acquire')
+    null=True,
+    blank=True,
+    help_text='Enter the date of acquire'
+    )
     working = models.IntegerField(default=0,validators=[MinValueValidator(0)])
     in_maintenance = models.IntegerField(default=0,validators=[MinValueValidator(0)])
     out_of_order = models.IntegerField(default=0,validators=[MinValueValidator(0)])
@@ -60,16 +62,19 @@ class Item(models.Model):
 
     KHARID = 'Kharid'
     ANUDAN = 'Anudan'
+
     SOURCE_CHOICES = [
         (KHARID, 'Kharid'),
         (ANUDAN, 'Anudan'),
+        
     ]
 
     itemSource = models.CharField(
-        max_length=6,
-        choices = SOURCE_CHOICES,
-        default = KHARID,
+    max_length=20,
+    default=KHARID,
+    help_text='Enter the item source'
     )
+
 
     def __str__(self):
         return "{}-{}".format(self.name, self.model)
