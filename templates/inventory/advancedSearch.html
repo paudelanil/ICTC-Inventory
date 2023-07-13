@@ -136,7 +136,8 @@
             {% else %}
             <td></td>
             {% endif %}
-             <td>{{item.name}}</td>
+            <td><a href="{% url 'item_details' item.name item.model%}">{{ item.name }}</a></td>
+            - {{ item.model }}
              <td>{{item.model}}</td>
              <td>{{item.working}}</td>
              <td>{{item.out_of_order}}</td>

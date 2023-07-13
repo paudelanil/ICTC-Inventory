@@ -1,5 +1,5 @@
 import csv
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse,get_object_or_404
 from .models import Categorie, Item, Floor, Room, SubItem
 from .forms import addCategoryForm, addItemForm, addExistingForm, allocateForm,addRoomForm,addFloorForm,categoryEditForm,editRoomForm,editItemForm,editCategoryForm
 from django.contrib.auth.forms import UserCreationForm
@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import subItemForm
 from datetime import datetime
+from django.urls import reverse
 
 # from django.db.models.signals import post_save
 # from django.dispatch import receiver,Signal
@@ -207,11 +208,12 @@ def advancedSearch(request):
         floorValue = request.POST['floorSelect']
         roomValue = request.POST['roomSelect']
         categoryValue = request.POST['categorySelect']
+        
     else:
         floorValue = 'All'
         roomValue = 'All'
         categoryValue = 'All'
-        categoryValue = Categorie.objects.order_by('id')[0].category_name
+        # categoryValue = Categorie.objects.order_by('id')[0].category_name
     print(categoryValue)
 
     categoryObj = Categorie.objects.all()       #dropdown list for category section
@@ -516,3 +518,19 @@ def details(request, key):
     except:
         messages.warning(request, f'Unable to find item')
     return redirect('advancedSearch')
+@login_required
+
+
+def item_details(request, item_name, model):
+    items = Item.objects.filter(name=item_name, model=model)
+    assigned_rooms = []
+    
+    
+    for item in items:
+        assigned_rooms.extend(item.room.items.all())
+
+        print('assigned room',assigned_rooms)
+        print('items',items)
+    
+    context = {'items': items, 'assigned_rooms': assigned_rooms}
+    return render(request, 'inventory/item_details.html', context)

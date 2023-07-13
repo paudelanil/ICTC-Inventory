@@ -44,7 +44,7 @@ class Item(models.Model):
                              help_text='Enter the model of the item', blank=True, null=True)
     cost_per_item = models.DecimalField(
         decimal_places=2, max_digits=10, null=True, help_text='Enter the cost per item',blank=True,validators=[MinValueValidator(0)])
-    room = models.ForeignKey('Room', null=True, on_delete=models.SET_NULL,
+    room = models.ForeignKey('Room', null=True, on_delete=models.SET_NULL,related_name='items',
                              help_text='Select room where it is kept')
     date_of_acquire = models.DateField(
     null=True,
@@ -74,8 +74,16 @@ class Item(models.Model):
     default=KHARID,
     help_text='Enter the item source'
     )
-    class Meta:
-        unique_together = [['name', 'model']]
+    # class Meta:
+    #     unique_together = [['name', 'model']]
+    def save(self, *args, **kwargs):
+        if not self.pk:  # Only set the ID for newly created items
+            same_items = Item.objects.filter(name=self.name, model=self.model)
+            if same_items.exists():
+                latest_item = same_items.latest('id')
+                self.pk = latest_item.id 
+                # + 1 if latest_item.id else 1
+        super().save(*args, **kwargs)
 
 
     def __str__(self):

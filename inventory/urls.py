@@ -36,6 +36,7 @@ urlpatterns = [
     path('addExistingSubItem/<int:key>',views.addExistingSubItem,name='addExistingSubItem'),
     path('deleteSubItem/<int:key>',views.deleteSubItem,name='deleteSubItem'),
     path('details/<int:key>', views.details, name='details'),
+    path('item/<str:item_name>/<str:model>/', views.item_details, name='item_details'),
 ]
 
 
