@@ -231,10 +231,21 @@ def advancedSearch(request):
 
         if (floorValue!='All') and (int(tempRoomObj.floor.floor) != int(floorValue)):
            roomValue = 'All'
+    category = None  # Initialize category with a default value
+    if categoryValue == 'All':
+        itemObj = Item.objects.all()
+    else:
+        try:
+            category = Categorie.objects.get(category_name=str(categoryValue))
+            itemObj = Item.objects.filter(category=category)
+        except Categorie.DoesNotExist:
+            itemObj = []
+        if (itemObj):
+            tempItem = Item.objects.filter(category = category)[0]
 
-    category = Categorie.objects.get(category_name = str(categoryValue))
+    # category = Categorie.objects.get(category_name = str(categoryValue))
 
-    itemObj = Item.objects.filter(category = category)
+    # itemObj = Item.objects.filter(category = category)
 
     if (roomValue == 'All'):
         itemTempObj = itemObj
@@ -255,10 +266,8 @@ def advancedSearch(request):
     if (roomValue!='All'):
         roomValue = int(roomValue)
     if (floorValue!='All'):
-        floorValue = int(floorValue)
-
-    if (itemObj):
-        tempItem = Item.objects.filter(category = category)[0]
+            floorValue = int(floorValue)
+    
 
     args = {'roomObj':roomObj, 'categoryObj':categoryObj, 'floorObj':floorObj, 'itemObj':itemObj,'floorValue':floorValue, 'roomValue':roomValue, 'categoryValue':categoryValue,'category':category}
     return render(request,'inventory/advancedSearch.html',args)

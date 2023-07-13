@@ -1,0 +1,28 @@
+{% extends 'inventory/main.html'%}
+{% load inventory_tags %}
+{%load crispy_forms_tags %}
+
+{%block content%}
+<body>
+
+
+ 
+
+<h1>Item Details</h1>
+<p>Name: {{ item.name }}</p>
+<p>Model: {{ item.model }}</p>
+<p>Working: {{ item.working }}</p>
+<!-- Other item details -->
+
+<h2>Location Information</h2>
+<p>Floor: {{ floor.floor }}</p>
+<p>Room: {{ room.room_no }}</p>
+
+    <ul>
+        {% for item_url in item_urls %}
+        <li><a href="{{ item_url }}">{{ item_url }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+{%endblock%}

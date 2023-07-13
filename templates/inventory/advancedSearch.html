@@ -85,8 +85,10 @@
                 </a>
                 <label for="categorySelect">Category</label>
                      <select id = "categorySelect" name="categorySelect" onchange='if(this.value != null) { this.form.submit(); }'>
-                    {% for obj in categoryObj%}
-                        <option value = {{obj.category_name}} {% ifequal categoryValue obj.category_name %} selected {% endifequal %}>  {{obj}} </option>
+                      <option value = 'All' {% ifequal categoryValue All %} selected {% endifequal %}>  All </option>
+
+                      {% for obj in categoryObj%}
+                        <option value = '{{obj.category_name}}' {% ifequal categoryValue obj.category_name %} selected {% endifequal %}>  {{obj}} </option>
                     {% endfor%}
                     </select>
                 </div>
