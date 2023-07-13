@@ -74,6 +74,8 @@ class Item(models.Model):
     default=KHARID,
     help_text='Enter the item source'
     )
+    class Meta:
+        unique_together = [['name', 'model']]
 
 
     def __str__(self):
