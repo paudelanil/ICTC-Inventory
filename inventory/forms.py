@@ -50,7 +50,8 @@ class editItemForm(ModelForm):
 
     class Meta:
         model = Item
-        fields = ['name', 'model', 'cost_per_item', 'room',
+        #removed name and model field as on form submission creates invalid error due to already existed namd and model.
+        fields = [ 'cost_per_item', 'room',
                   'date_of_acquire', 'working', 'in_maintenance', 'out_of_order', 'remarks', 'itemSource']
         Notrequired = ['room','cost_per_item']
         labels = {
