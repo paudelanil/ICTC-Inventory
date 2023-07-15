@@ -158,6 +158,8 @@ def edit(request,key):
              'verification_date': datetime.now().strftime("%Y-%m-%d")}
             
             obj.state['list'].append(to_add)
+            obj.verifiedStatus='Verified'
+            
             obj.save()
             messages.success(request, f'Edit Successful!')
             return redirect('advancedSearch')

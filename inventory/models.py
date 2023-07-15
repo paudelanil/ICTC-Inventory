@@ -74,8 +74,9 @@ class Item(models.Model):
     default=KHARID,
     help_text='Enter the item source'
     )
-    class Meta:
-        unique_together = [['name', 'model']]
+    verifiedStatus =models.CharField(max_length=50,null = True,default ='a')
+    # class Meta:
+    #     unique_together = [['name', 'model']]
     # def save(self, *args, **kwargs):
     #     if not self.pk:  # Only set the ID for newly created items
     #         same_items = Item.objects.filter(name=self.name, model=self.model)

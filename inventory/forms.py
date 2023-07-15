@@ -30,7 +30,7 @@ class addItemForm(ModelForm):
         model = Item
         fields = ['name', 'model', 'cost_per_item', 'room',
                   'date_of_acquire', 'working', 'in_maintenance', 'out_of_order', 'remarks', 'itemSource']
-        Notrequired = ['model','cost_per_item']
+        Notrequired = ['room','model','cost_per_item','remarks']
         labels = {
         "in_maintenance": "Number of Repairable items",
         "out_of_order": "Number of Out-of-order items",
