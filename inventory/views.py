@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import subItemForm
 from datetime import datetime
 from django.urls import reverse
+from django.db.models import Q
 
 # from django.db.models.signals import post_save
 # from django.dispatch import receiver,Signal
@@ -522,7 +523,7 @@ def details(request, key):
 
 
 def item_details(request, item_name, model):
-    items = Item.objects.filter(name=item_name, model=model)
+    items = Item.objects.filter(Q(name__iexact=item_name) & Q(model__iexact=model))
     assigned_rooms = []
     
     

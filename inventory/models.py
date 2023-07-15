@@ -74,16 +74,16 @@ class Item(models.Model):
     default=KHARID,
     help_text='Enter the item source'
     )
-    # class Meta:
-    #     unique_together = [['name', 'model']]
-    def save(self, *args, **kwargs):
-        if not self.pk:  # Only set the ID for newly created items
-            same_items = Item.objects.filter(name=self.name, model=self.model)
-            if same_items.exists():
-                latest_item = same_items.latest('id')
-                self.pk = latest_item.id 
-                # + 1 if latest_item.id else 1
-        super().save(*args, **kwargs)
+    class Meta:
+        unique_together = [['name', 'model']]
+    # def save(self, *args, **kwargs):
+    #     if not self.pk:  # Only set the ID for newly created items
+    #         same_items = Item.objects.filter(name=self.name, model=self.model)
+    #         if same_items.exists():
+    #             latest_item = same_items.latest('id')
+    #             self.pk = latest_item.id 
+    #             # + 1 if latest_item.id else 1
+    #     super().save(*args, **kwargs)
 
 
     def __str__(self):
