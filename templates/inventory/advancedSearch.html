@@ -1,6 +1,6 @@
 {% extends 'inventory/main.html'%}
 {% load static %}
-{%load staticfiles%}
+
 <link rel="stylesheet" href="{% static 'inventory/vendor/bootstrap/css/bootstrap.min.css' %}" />
 <script src="{% static 'inventory/vendor/ajax/libs/popper/1.14.6/umd/popper.min.js' %}"></script>
 <script src="{% static 'inventory/vendor/jquery/jquery-3.3.1.slim.min.js' %}"></script>
@@ -63,9 +63,9 @@
             <a href="{% url 'createfloor'%}"><img src="{% static 'inventory/images/plus.png' %}" class="plus-logo"></a>
                 <label for="floorSelect">Floor</label>
                     <select id = "floorSelect" name="floorSelect" onchange='if(this.value != null) { this.form.submit(); }'>
-                         <option value = 'All' {% ifequal floorValue All %} selected {% endifequal %}>  All </option>
+                         <option value = 'All' {% if floorValue  == All %} selected {% endif %}>  All </option>
                     {% for obj in floorObj%}
-                        <option value = {{obj.floor}} {% ifequal floorValue obj.floor %} selected {% endifequal %}>  {{obj}} </option>
+                        <option value = {{obj.floor}} {% if floorValue == obj.floor %} selected {% endif %}>  {{obj}} </option>
                     {% endfor%}
                     </select>
                 </div>
@@ -73,9 +73,9 @@
                <a href="{% url 'createroom'%}"> <img src="{% static 'inventory/images/plus.png' %}" class="plus-logo"></a>
                 <label for="roomSelect">Room</label>
                       <select id = "roomSelect" name="roomSelect" onchange='if(this.value != null) { this.form.submit(); }'>
-                         <option value = 'All' {% ifequal roomValue All %} selected {% endifequal %}>  All </option>
+                         <option value = 'All' {% if roomValue == All %} selected {% endif %}>  All </option>
                     {% for obj in roomObj%}
-                        <option value = {{obj.room_no}} {% ifequal roomValue obj.room_no %} selected {% endifequal %}>  {{obj}} </option>
+                        <option value = {{obj.room_no}} {% if roomValue == obj.room_no %} selected {% endif %}>  {{obj}} </option>
                     {% endfor%}
                     </select>
                 </div>
@@ -85,10 +85,10 @@
                 </a>
                 <label for="categorySelect">Category</label>
                      <select id = "categorySelect" name="categorySelect" onchange='if(this.value != null) { this.form.submit(); }'>
-                      <option value = 'All' {% ifequal categoryValue All %} selected {% endifequal %}>  All </option>
+                      <option value = 'All' {% if categoryValue == All %} selected {% endif %}>  All </option>
 
                       {% for obj in categoryObj%}
-                        <option value = '{{obj.category_name}}' {% ifequal categoryValue obj.category_name %} selected {% endifequal %}>  {{obj}} </option>
+                        <option value = '{{obj.category_name}}' {% if categoryValue == obj.category_name %} selected {% endif %}>  {{obj}} </option>
                     {% endfor%}
                     </select>
                 </div>
