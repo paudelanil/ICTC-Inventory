@@ -12,7 +12,7 @@ def validate_single_word(value):
         )
 
 class addCategoryForm(forms.Form):
-    categoryName = forms.CharField(max_length=30,validators=[validate_single_word])
+    categoryName = forms.CharField(max_length=40)
     extraField1 = forms.CharField(label='New field 1',max_length=30, required=False)
     extraField2 = forms.CharField(label='New field 2',max_length=30, required=False)
     extraField3 = forms.CharField(label='New field 3',max_length=30, required=False)
@@ -40,7 +40,7 @@ class addItemForm(ModelForm):
         }
   
 
-class editItemForm(ModelForm):
+class verifyItemForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
       
@@ -53,7 +53,27 @@ class editItemForm(ModelForm):
         #removed name and model field as on form submission creates invalid error due to already existed namd and model.
         fields = [ 'cost_per_item', 'room',
                   'date_of_acquire', 'working', 'in_maintenance', 'out_of_order', 'remarks', 'itemSource']
-        Notrequired = ['room','cost_per_item']
+        Notrequired = ['remarks','room','cost_per_item']
+        labels = {
+        "in_maintenance": "Number of Repairable items",
+        "out_of_order": "Number of Out-of-order items",
+        "working":"Number of working items",
+        'itemSource' : "Source of item",
+        }
+class editItemForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+      
+        for field in self.Meta.Notrequired:
+            self.fields[field].required = False
+
+
+    class Meta:
+        model = Item
+        #removed name and model field as on form submission creates invalid error due to already existed namd and model.
+        fields = [ 'category','name','model','cost_per_item', 'room',
+                  'date_of_acquire', 'working', 'in_maintenance', 'out_of_order', 'remarks', 'itemSource']
+        Notrequired = ['remarks','room','cost_per_item']
         labels = {
         "in_maintenance": "Number of Repairable items",
         "out_of_order": "Number of Out-of-order items",
