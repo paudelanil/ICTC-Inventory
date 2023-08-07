@@ -27,7 +27,7 @@ def validate_single_word(value):
 class Categorie(models.Model):
     category_name = models.CharField(max_length=50, default='Generic',
                                      help_text='Enter the category of the item',
-                                     unique=True, validators=[validate_single_word])
+                                     unique=True)
     # extra_fields = JSONField(blank=True, null=True, default=True)
     def __str__(self):
         return str(self.category_name)
@@ -58,6 +58,7 @@ class Item(models.Model):
     out_of_order = models.IntegerField(default=0,validators=[MinValueValidator(0)])
     created = models.DateTimeField(auto_now_add=True, null=True)
     last_modified = models.DateTimeField(auto_now=True, )
+    verifiedDate =models.DateField(null = True)
     extra_value = JSONField(blank=True, null=True, default=dict)
     remarks = models.CharField(max_length=400, default='',
                             help_text='Enter remarks')
@@ -76,7 +77,7 @@ class Item(models.Model):
     default=KHARID,
     help_text='Enter the item source'
     )
-    verifiedStatus =models.CharField(max_length=50,null = True,default ='a')
+    
     # class Meta:
     #     unique_together = [['name', 'model']]
     # def save(self, *args, **kwargs):
