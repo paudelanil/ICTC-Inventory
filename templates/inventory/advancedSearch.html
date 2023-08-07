@@ -118,7 +118,7 @@
              <th scope="col">Cost per item</th>
              <th scope="col">Remarks</th>
              <th scope="col">Source of item</th>
-             <th  scope="col">Verification</th>
+             <th  scope="col">Last Verified</th>
              <th scope="col">Actions</th>
              <!-- <th scope="col">Delete</th> -->
              {% if category.extra_fields%}
@@ -140,6 +140,7 @@
             <td><a href="{% url 'item_details' item.name item.model%}">{{ item.name }}</a></td>
             
              <td>{{item.model}}</td>
+             
              <td>{{item.working}}</td>
              <td>{{item.out_of_order}}</td>
              <td>{{item.in_maintenance}}</td>
@@ -147,7 +148,7 @@
              <td>{{item.cost_per_item}}</td>
              <td>{{item.remarks}}</td>
              <td>{{item.itemSource}}</td>
-             <td>{{item.verifiedSource}}</td>
+             <td>{{item.verifiedDate}}</td>
              <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
              <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
              {% if item.extra_value%}
@@ -167,7 +168,8 @@
 
                     <ul class="dropdown-menu">
                        <li><a class="dropdown-item" href="{% url 'addExisting' item.pk %}">Add</a></li>
-                       <li><a class="dropdown-item" href="{% url 'edit' item.pk %}">Verify</a></li>
+                       <li><a class="dropdown-item" href="{% url 'edit' item.pk %}">Edit</a></li>
+                       <li><a class="dropdown-item" href="{% url 'verify' item.pk %}">Verify</a></li>
                        <li><a class="dropdown-item" href="{% url 'delete' item.pk %}">Delete</a></li>
                        <li><a class="dropdown-item" href="{% url 'allocate' item.pk %}">Reallocate</a></li>
                        <li><a class="dropdown-item" href="{% url 'details' item.pk %}">Verification log </a></li>

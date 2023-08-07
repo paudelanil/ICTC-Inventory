@@ -40,6 +40,7 @@ Details {{item.name}}
       <th>Out of Order</th>
       <th>Remarks</th>
       <th>Item Source</th>
+      <th>Options</th>
     </tr>
   </thead>
   <tbody>
@@ -62,7 +63,29 @@ Details {{item.name}}
         <td>{{ item.in_maintenance }}</td>
         <td>{{ item.out_of_order }}</td>
         <td>{{ item.remarks }}</td>
-        <td>{{ item.item_source }}</td>
+        <td>{{ item.itemSource }}</td>
+        <td>
+
+
+          <div class="btn-group" role="group" aria-label="...">
+             <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Options
+                   <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu">
+                   <li><a class="dropdown-item" href="{% url 'addExisting' item.pk %}">Add</a></li>
+                   <li><a class="dropdown-item" href="{% url 'edit' item.pk %}">Edit</a></li>
+                   <li><a class="dropdown-item" href="{% url 'verify' item.pk %}">Verify</a></li>
+                   <li><a class="dropdown-item" href="{% url 'delete' item.pk %}">Delete</a></li>
+                   <li><a class="dropdown-item" href="{% url 'allocate' item.pk %}">Reallocate</a></li>
+                   <li><a class="dropdown-item" href="{% url 'details' item.pk %}">Verification log </a></li>
+                </ul>
+             </div>
+          </div>
+
+           </td>
       </tr>
     {% empty %}
       <tr>
