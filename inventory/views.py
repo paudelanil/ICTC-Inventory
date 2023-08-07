@@ -1,7 +1,7 @@
 import csv
 from django.shortcuts import render, redirect, HttpResponse,get_object_or_404
 from .models import Categorie, Item, Floor, Room, SubItem
-from .forms import addCategoryForm, addItemForm, addExistingForm, allocateForm,addRoomForm,addFloorForm,categoryEditForm,editRoomForm,editItemForm,editCategoryForm
+from .forms import addCategoryForm, addItemForm, addExistingForm, allocateForm,addRoomForm,addFloorForm,categoryEditForm,editRoomForm,editItemForm,editCategoryForm,verifyItemForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
@@ -142,11 +142,11 @@ def delete(request,key):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 @login_required
-def edit(request,key):
+def verify(request,key):
     obj = Item.objects.get(pk=key)
     categoryObj = obj.category
     if request.method == 'POST':
-        form = editItemForm(data=request.POST,instance = obj)
+        form = verifyItemForm(data=request.POST,instance = obj)
         if (form.is_valid):
             form.save()
             # get and modify and save
@@ -159,6 +159,27 @@ def edit(request,key):
             
             obj.state['list'].append(to_add)
             obj.verifiedStatus='Verified'
+            obj.verifiedDate  = datetime.now().strftime("%Y-%m-%d")
+            obj.save()
+            messages.success(request, f'Edit Successful!')
+            return redirect('advancedSearch')
+
+    else:
+        form = verifyItemForm(instance = obj)
+    context = {'addItemform':form,'item':obj.name,'model':obj.model}
+    return render(request,'inventory/verify.html',context)
+
+@login_required
+def edit(request,key):
+    obj = Item.objects.get(pk=key)
+    categoryObj = obj.category
+    if request.method == 'POST':
+        form = editItemForm(data=request.POST,instance = obj)
+        if (form.is_valid):
+            form.save()
+            # get and modify and save                 
+            
+            
             
             obj.save()
             messages.success(request, f'Edit Successful!')
@@ -284,12 +305,12 @@ def downloadCSV(request,key):
     response = HttpResponse(content_type='text/csv')
     response['Inventory-Log'] = 'attachment; filename="inventory.csv"'
     writer = csv.writer(response)
-    listOfFields=['Name','Model','Cost per item','Room','Date of acquirement', 'Working', 'Repairable', 'Out of order', 'Created', 'Last Modified']
+    listOfFields=['Name','Model','Cost per item','Room','Date of acquirement', 'Working', 'Repairable', 'Out of order', 'Created', 'Last Modified','Last Verified']
 
     writer.writerow(listOfFields)
 
     for obj in itemsObj:
-        valueField = [obj.name,obj.model,obj.cost_per_item,obj.room,obj.date_of_acquire,obj.working,obj.in_maintenance,obj.out_of_order,obj.created,obj.last_modified]
+        valueField = [obj.name,obj.model,obj.cost_per_item,obj.room,obj.date_of_acquire,obj.working,obj.in_maintenance,obj.out_of_order,obj.created.strftime("%Y-%m-%d"),obj.last_modified.strftime("%Y-%m-%d"),obj.verifiedDate]
         if (obj.extra_value):
             for key,value in obj.extra_value.items():
                 valueField.append(value)
@@ -337,7 +358,8 @@ def createCategory(request):
         addCategoryform = addCategoryForm(request.POST)
         if addCategoryform.is_valid():
             Categorie.objects.create(
-                category_name=request.POST['categoryName'])
+                category_name=request.POST['categoryName'],
+                extraField1 = request.POST['extraField1'])
             messages.success(request, f'Category created successfully!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     else:
@@ -523,7 +545,7 @@ def details(request, key):
     return redirect('advancedSearch')
 @login_required
 
-
+@login_required
 def item_details(request, item_name, model):
     items = Item.objects.filter(Q(name__iexact=item_name) & Q(model__iexact=model))
     assigned_rooms = []
@@ -537,3 +559,7 @@ def item_details(request, item_name, model):
     
     context = {'items': items, 'assigned_rooms': assigned_rooms}
     return render(request, 'inventory/item_details.html', context)
+@login_required
+def repairable_items_view(request):
+    repairable_items = Item.objects.filter(in_maintenance__gt=0)
+    return render(request, 'inventory/repairable_items.html', {'repairable_items': repairable_items})
