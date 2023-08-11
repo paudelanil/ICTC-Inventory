@@ -38,6 +38,17 @@ class addItemForm(ModelForm):
         'itemSource' : "Source of item",
         
         }
+    def clean(self):
+        cleaned_data = super().clean()
+        name = cleaned_data.get('name')
+        model = cleaned_data.get('model')
+
+        if name and model:
+            if Item.objects.filter(name=name, model=model).exists():
+                self.add_error('name', 'An item with this name and model already exists.')
+                self.add_error('model', '')
+    
+        return cleaned_data
   
 
 class verifyItemForm(ModelForm):
@@ -63,9 +74,38 @@ class verifyItemForm(ModelForm):
 class editItemForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-      
-        for field in self.Meta.Notrequired:
-            self.fields[field].required = False
+
+    class Meta:
+        model = Item
+        fields = ['name', 'model', 'cost_per_item', 'room',
+                  'date_of_acquire', 'working', 'in_maintenance', 'out_of_order', 'remarks', 'itemSource']
+        labels = {
+            "in_maintenance": "Number of Repairable items",
+            "out_of_order": "Number of Out-of-order items",
+            "working": "Number of working items",
+            'itemSource': "Source of item",
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        name = cleaned_data.get('name')
+        model = cleaned_data.get('model')
+        print (name,model)
+
+        if name and model:
+            # Get the instance being edited
+            instance = self.instance
+            print (instance)
+
+            # Check if there's an item with the same name and model, excluding the current instance
+            if Item.objects.filter(name=name, model=model).exclude(pk=instance.pk).exists():
+                print("exist")
+                self.add_error('name', 'An item with this name and model already exists.')
+                self.add_error('model', '')
+
+        return cleaned_data
+
+        
 
 
     class Meta:
@@ -80,6 +120,9 @@ class editItemForm(ModelForm):
         "working":"Number of working items",
         'itemSource' : "Source of item",
         }
+    def set_existing_item(self, existing_item):
+        self.existing_item = existing_item
+    
 
 
 class addExistingForm(forms.Form):

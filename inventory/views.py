@@ -175,7 +175,16 @@ def edit(request,key):
     categoryObj = obj.category
     if request.method == 'POST':
         form = editItemForm(data=request.POST,instance = obj)
-        if (form.is_valid):
+        
+        
+        if form.is_valid():
+            print("Request POST data:", request.POST)
+            print("Form data before saving:", form.cleaned_data)
+            instance = form.save(commit=False)
+            print("Instance data before saving:", instance.__dict__)
+            instance.save()
+        # ... rest of your view code
+
             form.save()
             # get and modify and save                 
             
@@ -358,8 +367,8 @@ def createCategory(request):
         addCategoryform = addCategoryForm(request.POST)
         if addCategoryform.is_valid():
             Categorie.objects.create(
-                category_name=request.POST['categoryName'],
-                extraField1 = request.POST['extraField1'])
+                category_name=request.POST['categoryName'])
+                # extraField1 = request.POST['extraField1']
             messages.success(request, f'Category created successfully!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     else:
