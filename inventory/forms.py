@@ -3,6 +3,7 @@ from django.forms import ModelForm
 from .models import Item,Room,Floor,Categorie,SubItem
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
+from django.db.models import Q
 
 def validate_single_word(value):
      if (' ' in value) == True:
@@ -75,6 +76,9 @@ class editItemForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        for field in self.Meta.Notrequired:
+            self.fields[field].required = False
+
     class Meta:
         model = Item
         fields = ['name', 'model', 'cost_per_item', 'room',
@@ -85,25 +89,33 @@ class editItemForm(ModelForm):
             "working": "Number of working items",
             'itemSource': "Source of item",
         }
+        NotRequired =['remarks','price']
 
     def clean(self):
         cleaned_data = super().clean()
         name = cleaned_data.get('name')
         model = cleaned_data.get('model')
-        print (name,model)
 
         if name and model:
             # Get the instance being edited
             instance = self.instance
-            print (instance)
 
-            # Check if there's an item with the same name and model, excluding the current instance
-            if Item.objects.filter(name=name, model=model).exclude(pk=instance.pk).exists():
-                print("exist")
-                self.add_error('name', 'An item with this name and model already exists.')
-                self.add_error('model', '')
+            # Check if the name and model have changed from the existing instance
+            if name != instance.name or model != instance.model:
+                # Construct a query to check for existing items with the same name and model
+                existing_item_query = Q(name=name, model=model)
+
+                # Exclude the current instance if editing
+                if instance.pk:
+                    existing_item_query &= ~Q(pk=instance.pk)
+
+                # Check if any items match the query
+                if Item.objects.filter(existing_item_query).exists():
+                    self.add_error('name', 'An item with this name and model already exists.')
+                    self.add_error('model', '')
 
         return cleaned_data
+
 
         
 

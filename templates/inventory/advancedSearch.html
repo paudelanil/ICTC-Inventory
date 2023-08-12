@@ -94,12 +94,12 @@
                 </div>
                 </div>
                 <br>
-                <div class="form-group">
+                <!-- <div class="form-group">
                 <div class="input-group" style="width:500px;">
                     <input type="text" id="searchInput" onkeyup="myFunction1()" placeholder="Search by name.." class="form-control" aria-describedby="start-search" style="height:30px;margin-top:2px;"/>
                     <span class="input-group-addon glyphicon glyphicon-search searchIcon" id="start-search"></span>
                     </div>
-                </div>
+                </div> -->
             
               </form>
       
@@ -286,4 +286,10 @@ function clicked(index) {
   }
 }
     </script>
+    <script>
+      $(document).ready(function () {
+          $('#dataTable').DataTable();
+      });
+      </script>
+      
 {% endblock content%}

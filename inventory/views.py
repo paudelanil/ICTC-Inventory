@@ -196,7 +196,7 @@ def edit(request,key):
 
     else:
         form = editItemForm(instance = obj)
-    context = {'addItemform':form,'item':obj.name}
+    context = {'addItemform':form,'item':obj.name,'model':obj.model}
     return render(request,'inventory/edit.html',context)
 
 
