@@ -8,12 +8,11 @@ It also has an advanced filter page with intuitive tables and add/edit/delete fa
 
 CSV files are also available for download.
 
-ICTCdatadump database file included for testing.
+
 
 ### Usage
 
 - `pip install -r requirements.txt`
-- Create a postgres database and fill the credentials in settings.py within DATABASES
 - `python manage.py makemigrations`
 - `python manage.py migrate`
 - `python manage.py createsuperuser` and add an admin user
