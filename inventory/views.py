@@ -414,7 +414,7 @@ def editRoom(request,key):
     else:
         form = editRoomForm(instance=obj)
     args = {'form':form}
-    return render(request,'inventory/editroom.html',args)
+    return render(request,'inventory/editRoom.html',args)
 
 @login_required
 def deleteRoom(request):
