@@ -23,7 +23,7 @@ CSV files are also available for download.
 ### Features
 - Add Item
     - An item can be added  directly to any location or to **Store** by default. One can select it's category or add new category for the item.
-    - Not selecting any Rooom options will directly assign location to store.
+    - Not selecting any Room options will directly assign location to store.
     - Unique value for an item's **name and model** is maintained while adding new item.
 - Advanced Search
   - **Filtering by Floor, Room, and Category:** You can filter items by selecting a floor, room, or category from the dropdown menus.
