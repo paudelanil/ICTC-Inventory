@@ -71,11 +71,28 @@ CSV files are also available for download.
 ### Screenshots
  
 
+**Dashboard**
 
+<img width="1277" alt="Dashboard" src="https://github.com/paudelanil/ICTC-Inventory/assets/86644466/c0698e4a-8320-414c-97f1-34919eab89ac">
 
-![0](https://user-images.githubusercontent.com/83212553/180799227-f6754db0-b6b8-424d-9d65-6039e5449a8e.png)
-![1](https://user-images.githubusercontent.com/83212553/180799238-4f67ef05-136f-4511-8b0f-b4246cebe601.png)
+**Add Item**
+
+<img width="1276" alt="addItem" src="https://github.com/paudelanil/ICTC-Inventory/assets/86644466/8c4f299e-54e4-4a3b-bc45-545a44874545">
+
+**Search**
+
+<img width="1278" alt="Search" src="https://github.com/paudelanil/ICTC-Inventory/assets/86644466/38f6f5c0-1511-45c8-a015-7cac0f04c1a5">
+
+**Item wise search**
+
+<img width="1280" alt="Search2" src="https://github.com/paudelanil/ICTC-Inventory/assets/86644466/6075be04-8b94-418a-ac49-20da75cc115e">
+
+**Settings**  
+
+<img width="1280" alt="Settings" src="https://github.com/paudelanil/ICTC-Inventory/assets/86644466/2b77d583-be16-4ce1-852b-aa14ee3f63cb">
+
+**Download CSV**
+
 ![2](https://user-images.githubusercontent.com/83212553/180799249-01d5b372-2e19-4fae-bb48-e110ea5b4e7d.png)
-![3](https://user-images.githubusercontent.com/83212553/180799264-6281cb84-5709-4c51-a740-2b5024feff33.png)
 
 
